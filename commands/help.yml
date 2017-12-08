@@ -1,0 +1,36 @@
+help:
+    help: |
+          Use *help <command> to view the documentations for the specific commands.
+          Available commands:
+    invasionalert: |
+                   Adds/Removes the 'Kritias Watch' role, along with permissions to view the Kritias Invasion alert channel. The bot will **@mention** this role 5 minutes and 1 minute before an invasion, sending a notification to all members.
+    pdr:
+        default: |
+                 Usage: *pdr <base pdr><additional pdr sources>
+                 Example:  *pdr 75 20 20 30
+                 Output: Your pdr is 88.8%.
+    carryme:
+        default: |
+                 Type *help carryme <command> for a guide on how each command works.
+                 Available commands:
+                 bosses
+                 cancel
+                 pos
+        bosses: |
+                Registers you to the boss carry list.
+                Usage: *carryme bosses [boss list]
+                Example: *carryme bosses [hmag cvel hellux]
+        pos: |
+             Shows your current position in the boss carry list.
+             Usage: *carryme pos (optional: [boss list])
+             Example: *carryme pos [hellux cvb]
+        cancel: |
+                Removes you from the boss carry list.
+                Usage: *carryme cancel [boss list]
+                Example: *carryme cancel [cq cp cvb]
+    nsfw: |
+          Adds/removes access to the nsfw text channel.
+    example:
+        default: |
+                 Usage: *example
+                 Output: (%mentionuser) Hi

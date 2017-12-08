@@ -1,0 +1,131 @@
+{
+    "Commands": {
+        "help": {
+            "Enabled": true,
+            "Script": "help.py",
+            "Permissions": [
+                "*"
+            ]
+        },
+        "invasionalert": {
+            "Enabled": true,
+            "Script": "invasionalert.py",
+            "Permissions": [
+                "*"
+            ]
+        },
+        "nsfw": {
+            "Enabled": true,
+            "Script": "nsfw.py",
+            "Permissions": [
+                "*"
+            ]
+        },
+        "subscribe": {
+            "Enabled": true,
+            "Script": "subscribe.py",
+            "Permissions": [
+                "260326109655072771"
+            ]
+        },
+        "example": {
+            "Enabled": true,
+            "Script": "example.py",
+            "Permissions": [
+                "260326109655072771"
+            ]
+        },
+        "on_join": {
+            "Enabled": true,
+            "Sub-Commands": {
+                "default": {
+                    "Enabled": true
+                },
+                "edit": {
+                    "Enabled": true
+                }
+            },
+            "User-Defined": "Welcome to (%discordserver), (%mentionuser)! Follow the instructions in <#260325692040937472> and wait for a response from our <@&260326109655072771>",
+            "Default-Message": "Welcome to (%discordserver), (%mentionuser)!",
+            "Permissions": [
+                "260326109655072771"
+            ],
+            "Script": "on_join.py"
+        },
+        "motd": {
+            "Enabled": false,
+            "Permissions": [
+                "260326109655072771"
+            ],
+            "Script": "motd.py",
+            "Default-Message": "Message from the Admirals:\nWelcome to (%dservername)!"
+        },
+        "update": {
+            "Enabled": false,
+            "Permissions": [
+                "260326109655072771"
+            ],
+            "Script": "fetch_names.py",
+            "Locals": true
+        },
+        "_reload_config": {
+            "Enabled": true,
+            "Script": "reload_config.py",
+            "Permissions": [
+                "260326109655072771"
+            ]
+        },
+        "pdr": {
+            "Enabled": true,
+            "Script": "pdr.py",
+            "Permissions": [
+                "*"
+            ]
+        },
+        "carryme": {
+            "Enabled": false,
+            "Script": "carryme.py",
+            "Permissions": [
+                "*"
+            ],
+            "Locals": true,
+            "Sub-Commands": {
+                "bosses": {
+                    "Enabled": true
+                },
+                "cancel": {
+                    "Enabled": false
+                },
+                "done": {
+                    "Enabled": true,
+                    "Permissions": [
+                        "260326109655072771",
+                        "139305173674754048",
+                        "70499333157433344",
+                        "184623728401842176"
+                    ]
+                },
+                "pos": {
+                    "Enabled": true
+                }
+            }
+        },
+        "register": {
+            "Enabled": false,
+            "Locals": true,
+            "Script": "register.py",
+            "Permissions": [
+                "*"
+            ]
+        },
+        "clear": {
+            "Enabled": true,
+            "Script": "clear.py",
+            "Permissions": [
+                "260326109655072771"
+            ]
+        }
+    },
+    "ServiceAuthCredentials": "ActivitySheet-17b2f15a0207.json",
+    "Prefix": "*"
+}
