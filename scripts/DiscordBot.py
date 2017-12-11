@@ -231,7 +231,7 @@ class DiscordBot(discord.Client):
                 if datetime.now().time().minute == 0:
                     index = 0
                     while not done and index < 5:
-                        if feed.entries[index]['tags'][1]['terms'] == 'Puzzle of the day':
+                        if feed.entries[index]['tags'][1]['term'] == 'Puzzle of the day':
                             done = True
                             text = parser.handle(feed.entries[4]['content'][0]['value'])
                             index = text.find('https://')
