@@ -1,5 +1,6 @@
 aiohttp==1.0.5
 async-timeout==1.1.0
+bcrypt==3.1.4
 boto==2.48.0
 cffi==1.9.1
 chardet==2.3.0
@@ -7,10 +8,12 @@ click==6.7
 cryptography==1.7.2
 discord.py==0.16.6
 Django==1.10.5
+feedparser==5.2.1
 Flask==0.12
 google-api-python-client==1.6.2
 gspread==0.6.2
 gunicorn==19.6.0
+html2text==2017.10.4
 httplib2==0.10.3
 idna==2.2
 itsdangerous==0.24
@@ -19,6 +22,7 @@ MarkupSafe==0.23
 multidict==2.1.4
 oauth2client==4.0.0
 olefile==0.44
+paramiko==2.4.0
 Pillow==4.1.1
 praw==5.2.0
 prawcore==0.12.0

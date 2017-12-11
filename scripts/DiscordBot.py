@@ -9,6 +9,8 @@ import importlib.util
 import pytz
 import praw
 import random
+import feedparser
+import html2text
 from queue import Queue
 from json import JSONDecodeError
 from datetime import datetime
@@ -84,7 +86,7 @@ class DiscordBot(discord.Client):
             self.load_to_local()
             self.loop.create_task(self.kritias_alert())
             self.loop.create_task(self.spreadsheet_connection_refresher())
-
+            self.loop.create_task(self.daily_puzzle())
             for x, entry in enumerate(self.subreddits):
                 self.loop.create_task(self.submission_puller(entry))
 
@@ -185,7 +187,7 @@ class DiscordBot(discord.Client):
     -----------------------------------------------------------------------------------------------------------------'''
 
     '''-----------------------------------------------------------------------------------------------------------------
-                                                                            Reddit API
+                                                                            Reddit/RSS API
     -----------------------------------------------------------------------------------------------------------------'''
     @asyncio.coroutine
     def submission_puller(self, entry):
@@ -213,6 +215,41 @@ class DiscordBot(discord.Client):
                 if not b:
                     b = True
             yield from asyncio.sleep(30)
+
+    @asyncio.coroutine
+    def daily_puzzle(self):
+        yield from self.wait_until_ready()
+        self.todayTZ = self.localtime.localize(datetime.today())
+        channel = discord.Channel(server=discord.Server(id='260325692040937472'), id='314032599838359553')
+        feed = feedparser.parse('https://thinkwitty.com/feed')
+        parser = html2text.HTML2Text()
+        parser.ignore_links = True
+        done = False
+
+        while not self.is_closed:
+            if datetime.now().time().hour() == 10:
+                if datetime.now().time().minute() == 0:
+                    index = 0
+                    while not done and index < 5:
+                        if feed.entries[index]['tags'][1]['terms'] == 'Puzzle of the day':
+                            done = True
+                            text = parser.handle(feed.entries[4]['content'][0]['value'])
+                            index = text.find('https://')
+                            end = index
+
+                            for x, val in enumerate(text[index:]):
+                                if val == '?':
+                                    end += x
+                                    break
+
+                            image_link = text[index:end].replace('\n', '')
+                            yield from self.send_message(channel, image_link)
+                        else:
+                            index += 1
+                else:
+                    done = False
+                    self.todayTZ = self.localtime.localize(datetime.today())
+                    yield from asyncio.sleep(30)
 
     '''-----------------------------------------------------------------------------------------------------------------
                                                                             End Reddit API
@@ -391,6 +428,7 @@ class DiscordBot(discord.Client):
     def kritias_alert(self):
         yield from self.wait_until_ready()
         self.todayTZ = self.localtime.localize(datetime.today())
+
         while not self.is_closed:
             if datetime.now().time().minute == 0:
                 if datetime.now().time().hour in self.alert_times[bool(not bool(self.todayTZ.dst()))]:
