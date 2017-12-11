@@ -227,8 +227,8 @@ class DiscordBot(discord.Client):
         done = False
 
         while not self.is_closed:
-            if datetime.now().time().hour() == 10:
-                if datetime.now().time().minute() == 0:
+            if datetime.now().time().hour == 10:
+                if datetime.now().time().minute == 0:
                     index = 0
                     while not done and index < 5:
                         if feed.entries[index]['tags'][1]['terms'] == 'Puzzle of the day':
