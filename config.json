@@ -14,6 +14,13 @@
                 "*"
             ]
         },
+        "forceqotd": {
+            "Enabled": true,
+            "Script": "forceqotd.py",
+            "Permissions": [
+                "260326109655072771"
+            ]
+        },
         "nsfw": {
             "Enabled": true,
             "Script": "nsfw.py",
