@@ -246,9 +246,10 @@ class DiscordBot(discord.Client):
                             yield from self.send_message(channel, image_link)
                         else:
                             index += 1
+                else:
+                    done = False
+                    self.todayTZ = self.localtime.localize(datetime.today())
             else:
-                done = False
-                self.todayTZ = self.localtime.localize(datetime.today())
                 yield from asyncio.sleep(30)
 
     '''-----------------------------------------------------------------------------------------------------------------
