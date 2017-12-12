@@ -193,13 +193,12 @@ class DiscordBot(discord.Client):
     def submission_puller(self, entry):
         yield from self.wait_until_ready()
 
-        self.todayTZ = self.localtime.localize(datetime.today())
         channel = discord.Channel(server=discord.Server(id='260325692040937472'), id=entry[0])
 
         self.pool[entry[0]] = entry[1][:]
         b = True
         while not self.is_closed:
-            if datetime.now().time().minute in [0, 15, 30, 45]:
+            if self.localtime.localize(datetime.today()).minute in [0, 15, 30, 45]:
                 if b:
                     b = False
                     if len(self.pool[entry[0]]) == 0:
@@ -223,7 +222,6 @@ class DiscordBot(discord.Client):
     def daily_puzzle(self):
         yield from self.wait_until_ready()
 
-        self.todayTZ = self.localtime.localize(datetime.today())
         channel = discord.Channel(server=discord.Server(id='260325692040937472'), id='314032599838359553')
 
         parser = html2text.HTML2Text()
@@ -231,8 +229,8 @@ class DiscordBot(discord.Client):
         done = False
 
         while not self.is_closed:
-            if datetime.now().time().hour == 10:
-                if datetime.now().time().minute == 0:
+            if self.localtime.localize(datetime.today()).hour == 10:
+                if self.localtime.localize(datetime.today()).minute == 0:
                     feed = feedparser.parse('https://thinkwitty.com/feed')
                     index = 0
                     while not done and index < 5:
@@ -436,19 +434,19 @@ class DiscordBot(discord.Client):
         self.todayTZ = self.localtime.localize(datetime.today())
 
         while not self.is_closed:
-            if datetime.now().time().minute == 0:
-                if datetime.now().time().hour in self.alert_times[bool(not bool(self.todayTZ.dst()))]:
+            if self.localtime.localize(datetime.today()).minute == 0:
+                if self.localtime.localize(datetime.today()).hour in self.alert_times[bool(not bool(self.todayTZ.dst()))]:
                     if not self.five_alert:
                         self.five_alert = True
                         ret = yield from self.send_message(self.kritiasChannel, self.kritiasWatch.mention + ' Invasion is about to commence in 5 minutes.')
                         self.alert_clear.append(ret)
-            elif datetime.now().time().minute == 4:
+            elif self.localtime.localize(datetime.today()).minute == 4:
                 if datetime.now().time().hour in self.alert_times[bool(not bool(self.todayTZ.dst()))]:
                     if not self.one_alert:
                         self.one_alert = True
                         ret = yield from self.send_message(self.kritiasChannel, self.kritiasWatch.mention + ' Invasion is about to commence in 1 minute.')
                         self.alert_clear.append(ret)
-            if datetime.now().time().minute == 6:
+            if self.localtime.localize(datetime.today()).minute == 6:
                 if self.five_alert or self.one_alert:
                     self.five_alert = False
                     self.one_alert = False
