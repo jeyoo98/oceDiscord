@@ -221,7 +221,6 @@ class DiscordBot(discord.Client):
         yield from self.wait_until_ready()
         self.todayTZ = self.localtime.localize(datetime.today())
         channel = discord.Channel(server=discord.Server(id='260325692040937472'), id='314032599838359553')
-        feed = feedparser.parse('https://thinkwitty.com/feed')
         parser = html2text.HTML2Text()
         parser.ignore_links = True
         done = False
@@ -229,6 +228,7 @@ class DiscordBot(discord.Client):
         while not self.is_closed:
             if datetime.now().time().hour == 10:
                 if datetime.now().time().minute == 0:
+                    feed = feedparser.parse('https://thinkwitty.com/feed')
                     index = 0
                     while not done and index < 5:
                         if feed.entries[index]['tags'][1]['term'] == 'Puzzle of the day':
@@ -249,8 +249,7 @@ class DiscordBot(discord.Client):
                 else:
                     done = False
                     self.todayTZ = self.localtime.localize(datetime.today())
-            else:
-                yield from asyncio.sleep(30)
+            yield from asyncio.sleep(30)
 
     '''-----------------------------------------------------------------------------------------------------------------
                                                                             End Reddit API
