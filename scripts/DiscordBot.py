@@ -192,6 +192,8 @@ class DiscordBot(discord.Client):
     @asyncio.coroutine
     def submission_puller(self, entry):
         yield from self.wait_until_ready()
+
+        self.todayTZ = self.localtime.localize(datetime.today())
         channel = discord.Channel(server=discord.Server(id='260325692040937472'), id=entry[0])
 
         self.pool[entry[0]] = entry[1][:]
@@ -214,13 +216,16 @@ class DiscordBot(discord.Client):
             else:
                 if not b:
                     b = True
+                    self.todayTZ = self.localtime.localize(datetime.today())
             yield from asyncio.sleep(30)
 
     @asyncio.coroutine
     def daily_puzzle(self):
         yield from self.wait_until_ready()
+
         self.todayTZ = self.localtime.localize(datetime.today())
         channel = discord.Channel(server=discord.Server(id='260325692040937472'), id='314032599838359553')
+
         parser = html2text.HTML2Text()
         parser.ignore_links = True
         done = False
@@ -246,7 +251,8 @@ class DiscordBot(discord.Client):
                             yield from self.send_message(channel, image_link)
                         else:
                             index += 1
-                else:
+            else:
+                if not done:
                     done = False
                     self.todayTZ = self.localtime.localize(datetime.today())
             yield from asyncio.sleep(30)
