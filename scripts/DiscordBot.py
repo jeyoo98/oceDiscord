@@ -85,8 +85,9 @@ class DiscordBot(discord.Client):
             self.prefix = self.json_data['Prefix']
             self.load_to_local()
             self.loop.create_task(self.kritias_alert())
-            #self.loop.create_task(self.spreadsheet_connection_refresher())
-            self.loop.create_task(self.daily_puzzle())
+
+            self.loop.create_task(self.spreadsheet_connection_refresher())
+            #self.loop.create_task(self.daily_puzzle())
             for x, entry in enumerate(self.subreddits):
                 self.loop.create_task(self.submission_puller(entry))
 
