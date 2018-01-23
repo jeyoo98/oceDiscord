@@ -11,6 +11,9 @@ local_data_queue = Queue()
 def main(message: Message, discord_object: DiscordBot.DiscordBot):
     try:
         delete_amount = int(discord_object.parse_message(message.content)[1])
+        if not (type(delete_amount) is int):
+            raise IndexError
+
         yield from discord_object.send_message(message.channel, message.author.mention +
                                           ' You are about to clear messages in this channel. Type *confirm to proceed or *cancel to cancel.')
         yield from get_reply(message, discord_object, delete_amount)
